@@ -2,43 +2,39 @@ import { Cliente } from "./Cliente.js";
 
 export class ContaCorrente{
     static numContas = 0;
-    agencia;
-    
-    cliente;
-    #saldo = 0;
-
-    set cliente(novoValor) {
-        if (novoValor instanceof Cliente) {
-            this.cliente = novoValor;
-        }
-
-    }
-    get cliente() {
-        return this.cliente;
-    }
-
-    get saldo(){
-        return this.#saldo;
-    }
 
     constructor(cliente , agencia){
         this.agencia = agencia;
-        this.cliente= cliente;
+        this._cliente = cliente;
+        this._saldo = 0;
         ContaCorrente.numContas += 1;
     }
 
+    set cliente(novoValor) {
+        if (novoValor instanceof Cliente) {
+            this._cliente = novoValor;
+        }
+    }
+    get cliente() {
+        return this._cliente;
+    }
+
+    get saldo(){
+        return this._saldo;
+    }
+
     sacar(valor){
-        if(valor <= this.#saldo){
-            this.#saldo -= valor;
-            console.log(this.#saldo);
+        if(valor <= this._saldo){
+            this._saldo -= valor;
+            console.log(this._saldo);
             return valor;
         }
     }
 
     depositar(valor){
         if(valor > 0){
-            this.#saldo += valor;
-            console.log(this.#saldo)
+            this._saldo += valor;
+            console.log(this._saldo)
         }       
     }
     transferir(valor, conta){
